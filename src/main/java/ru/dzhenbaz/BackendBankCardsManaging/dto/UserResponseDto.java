@@ -9,7 +9,7 @@ public class UserResponseDto {
     @Schema(description = "Уникальный идентификатор пользователя", example = "1")
     private Long id;
 
-    @Schema(description = "Email пользователя", example = "admin@example.com")
+    @Schema(description = "Email пользователя", example = "admin@gmail.com")
     private String email;
 
     @Schema(description = "Роль пользователя", example = "ROLE_ADMIN")

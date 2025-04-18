@@ -72,14 +72,16 @@ public class CardController {
         }
     }
 
-    @Operation(summary = "Удалить карту")
+    @Operation(summary = "Удалить карту (доступно только администратору)")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cardService.deleteCard(id);
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Изменить статус карты")
+    @Operation(summary = "Изменить статус карты",
+            description = "Изменение статуса карты на любой из доступных (ACTIVE, BLOCKED, EXPIRED) для Администратора, " +
+                    "запрос на блокировку карты для пользователя (доступен только статус BLOCKED)")
     @PatchMapping("/{id}/status")
     public ResponseEntity<?> updateCardStatus(@PathVariable Long id, @RequestBody @Valid CardStatusUpdateRequestDto request) {
         User user = authService.getCurrentUser();

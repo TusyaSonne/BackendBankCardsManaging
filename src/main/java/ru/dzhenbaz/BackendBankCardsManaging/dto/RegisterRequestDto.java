@@ -12,12 +12,12 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 @Schema(description = "Запрос для регистрации пользователя")
 public class RegisterRequestDto {
 
-    @Schema(description = "Email пользователя", example = "user@example.com", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Email пользователя", example = "user@gmail.com", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Email must be valid")
     private String email;
 
-    @Schema(description = "Пароль", example = "mySecret123", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Пароль", example = "12345", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "Password must not be blank")
     @Size(min = 5, message = "Password must be at least 5 characters")
     private String password;

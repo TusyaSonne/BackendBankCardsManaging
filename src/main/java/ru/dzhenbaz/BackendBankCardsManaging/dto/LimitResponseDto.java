@@ -10,7 +10,7 @@ public class LimitResponseDto {
     @Schema(description = "Имя лимита", example = "daily_limit")
     private String name;
 
-    @Schema(description = "Значение лимита в рублях", example = "50000.00")
+    @Schema(description = "Значение лимита в рублях", example = "100000.00")
     private BigDecimal value;
 
     public LimitResponseDto() {

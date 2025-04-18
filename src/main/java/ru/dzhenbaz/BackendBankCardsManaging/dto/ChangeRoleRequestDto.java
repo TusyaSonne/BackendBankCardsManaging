@@ -7,7 +7,7 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 @Schema(description = "Запрос на изменение роли пользователя")
 public class ChangeRoleRequestDto {
 
-    @Schema(description = "Новая роль пользователя", example = "ROLE_USER", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Новая роль пользователя", example = "ROLE_ADMIN", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "Role is required")
     private Role newRole;
 

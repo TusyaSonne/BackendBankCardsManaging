@@ -17,10 +17,10 @@ public class TransferResponseDto {
     @Schema(description = "Номер карты-получателя", example = "**** **** **** 2222")
     private String toCardNumber;
 
-    @Schema(description = "Сумма перевода", example = "1500.00")
+    @Schema(description = "Сумма перевода", example = "5000.00")
     private BigDecimal amount;
 
-    @Schema(description = "Описание перевода", example = "Перевод на резервную карту")
+    @Schema(description = "Описание перевода", example = "Побаловать самого себя")
     private String description;
 
     public TransferResponseDto() {
@@ -67,11 +67,11 @@ public class TransferResponseDto {
         this.amount = amount;
     }
 
-    public String getDescpription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescpription(String descpription) {
-        this.description = descpription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

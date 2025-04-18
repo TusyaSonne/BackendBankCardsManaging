@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Schema(description = "Запрос на обновление лимита")
 public class LimitUpdateRequestDto {
 
-    @Schema(description = "Новое значение лимита", example = "75000.00", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Новое значение лимита", example = "50000.00", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "Status value is required")
     private BigDecimal newValue;
 

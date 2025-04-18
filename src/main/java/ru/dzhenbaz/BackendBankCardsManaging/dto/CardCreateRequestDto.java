@@ -9,11 +9,11 @@ import java.math.BigDecimal;
 @Schema(description = "Запрос на создание карты")
 public class CardCreateRequestDto {
 
-    @Schema(description = "ID пользователя, которому будет принадлежать карта", example = "3")
+    @Schema(description = "ID пользователя, которому будет принадлежать карта", example = "1")
     @NotNull(message = "User ID is required")
     private Long userId;
 
-    @Schema(description = "Начальный баланс карты", example = "0.00")
+    @Schema(description = "Начальный баланс карты", example = "100000.00")
     @NotNull(message = "Balance is required")
     @DecimalMin(value = "0.00", message = "Balance must be zero or greater")
     private BigDecimal balance;

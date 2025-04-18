@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Ответ при успешном снятии средств")
 public class WithdrawResponseDto {
 
-    @Schema(description = "ID транзакции", example = "10")
+    @Schema(description = "ID транзакции", example = "5")
     private Long Id;
 
     @Schema(description = "Маскированный номер карты", example = "**** **** **** 2222")
@@ -19,10 +19,10 @@ public class WithdrawResponseDto {
     @Schema(description = "Тип транзакции", example = "WITHDRAW")
     private TransactionType type;
 
-    @Schema(description = "Сумма списания", example = "300.00")
+    @Schema(description = "Сумма списания", example = "1000.00")
     private BigDecimal amount;
 
-    @Schema(description = "Дата и время транзакции", example = "2024-04-16T12:12:12")
+    @Schema(description = "Дата и время транзакции", example = "2025-04-18T16:17:42.4058466")
     private LocalDateTime timestamp;
 
     @Schema(description = "Описание транзакции", example = "Снятие наличных")

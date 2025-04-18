@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-@Schema(description = "Запрос на перевод средств между картами")
+@Schema(description = "Запрос на перевод средств между картами пользователя")
 public class TransferRequestDto {
 
     @Schema(description = "ID карты-отправителя", example = "1", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -17,7 +17,7 @@ public class TransferRequestDto {
     @NotNull(message = "Destination card ID is required")
     private Long toCardId;
 
-    @Schema(description = "Сумма перевода", example = "2500.00", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Сумма перевода", example = "5000.00", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "Transfer amount is required")
     @DecimalMin(value = "0.01", message = "Transfer amount must be greater than 0")
     private BigDecimal amount;

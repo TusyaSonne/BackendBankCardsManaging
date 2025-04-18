@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@Tag(name = "5. Пользователи", description = "Операции управления пользователями")
+@Tag(name = "5. Пользователи", description = "Операции управления пользователями (только для Администратора)")
 public class UserController {
 
     private final UserService userService;
@@ -34,7 +34,7 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
-    @Operation(summary = "Получить список всех пользователей (только для администратора)")
+    @Operation(summary = "Получить список всех пользователей")
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll() {
         return ResponseEntity.ok(userService.getAllUsers()
@@ -50,7 +50,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Изменить роль пользователя (только для администратора)")
+    @Operation(summary = "Изменить роль пользователя")
     @PostMapping("/{id}/role")
     public ResponseEntity<?> updateUserRole(@PathVariable Long id, @RequestBody @Valid ChangeRoleRequestDto request) {
 

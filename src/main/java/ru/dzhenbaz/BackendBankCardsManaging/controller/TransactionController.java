@@ -46,7 +46,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.getAllTransactions(user, type, pageable));
     }
 
-    @Operation(summary = "Получить транзакции по конкретной карте")
+    @Operation(summary = "Получить транзакции по конкретной карте (пользователь - только по своей)")
     @GetMapping("/cards/{cardId}")
     public ResponseEntity<Page<TransactionResponseDto>> getByCard(
             @PathVariable Long cardId,
@@ -58,7 +58,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.getByCardId(cardId, type, pageable));
     }
 
-    @Operation(summary = "Снять средства с карты")
+    @Operation(summary = "Снять средства со своей карты")
     @PostMapping("/withdraw")
     public ResponseEntity<WithdrawResponseDto> withdraw(@RequestBody @Valid WithdrawRequestDto request) {
         WithdrawResponseDto transaction = transactionService.withdraw(
@@ -69,7 +69,7 @@ public class TransactionController {
         return ResponseEntity.ok(transaction);
     }
 
-    @Operation(summary = "Перевести средства между своими картами")
+    @Operation(summary = "Перевод средств между своими картами")
     @PostMapping("/transfer")
     public ResponseEntity<TransferResponseDto> transfer(@RequestBody @Valid TransferRequestDto request) {
         TransferResponseDto response = transactionService.transfer(

@@ -18,13 +18,13 @@ public class TransactionResponseDto {
     @Schema(description = "Тип транзакции", example = "WITHDRAW")
     private TransactionType type;
 
-    @Schema(description = "Сумма транзакции", example = "500.00")
+    @Schema(description = "Сумма транзакции", example = "5000.00")
     private BigDecimal amount;
 
-    @Schema(description = "Дата и время транзакции", example = "2024-04-16T14:45:30")
+    @Schema(description = "Дата и время транзакции", example = "2025-04-17T21:51:36.041976")
     private LocalDateTime timestamp;
 
-    @Schema(description = "Описание транзакции", example = "Withdrawal at ATM")
+    @Schema(description = "Описание транзакции (опционально)", example = "Test Withdrawal")
     private String description;
 
     public TransactionResponseDto() {

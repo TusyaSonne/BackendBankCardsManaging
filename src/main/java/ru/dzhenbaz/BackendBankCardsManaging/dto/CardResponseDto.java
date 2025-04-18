@@ -15,7 +15,7 @@ public class CardResponseDto {
     @Schema(description = "Маскированный номер карты", example = "**** **** **** 1234")
     private String maskedCardNumber;
 
-    @Schema(description = "Дата окончания срока действия", example = "2026-12-31")
+    @Schema(description = "Дата окончания срока действия", example = "2027-04-17")
     private LocalDate expirationDate;
 
     @Schema(description = "Статус карты", example = "ACTIVE")
@@ -24,7 +24,7 @@ public class CardResponseDto {
     @Schema(description = "Баланс карты", example = "100000.00")
     private BigDecimal balance;
 
-    @Schema(description = "ID владельца карты", example = "5")
+    @Schema(description = "ID владельца карты", example = "2")
     private Long ownerId;
 
     public CardResponseDto() {}
