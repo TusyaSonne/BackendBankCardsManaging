@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.AuthResponseDto;
+import ru.dzhenbaz.BackendBankCardsManaging.dto.LoginRequestDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.RegisterRequestDto;
 import ru.dzhenbaz.BackendBankCardsManaging.model.User;
 import ru.dzhenbaz.BackendBankCardsManaging.repository.UserRepository;
@@ -46,7 +47,7 @@ public class AuthService {
         return new AuthResponseDto(jwtUtil.generateToken(savedUser.getEmail()));
     }
 
-    public AuthResponseDto login(RegisterRequestDto request) {
+    public AuthResponseDto login(LoginRequestDto request) {
         User user = repository.findUserByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException(("User with this email not found")));
         if (!encoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid Credentials");
