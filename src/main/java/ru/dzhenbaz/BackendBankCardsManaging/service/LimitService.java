@@ -24,11 +24,11 @@ public class LimitService {
         if (limit == null) {
             limit = new Limit();
             limit.setName("daily_limit");
-            limit.setValue(BigDecimal.valueOf(1000000.00));
+            limit.setLimitValue(BigDecimal.valueOf(1000000.00));
             limit = limitRepository.save(limit);
         }
 
-        return new LimitResponseDto(limit.getName(), limit.getValue());
+        return new LimitResponseDto(limit.getName(), limit.getLimitValue());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -38,8 +38,8 @@ public class LimitService {
             limit = new Limit();
             limit.setName("daily_limit");
         }
-        limit.setValue(newValue);
+        limit.setLimitValue(newValue);
         limitRepository.save(limit);
-        return new LimitResponseDto(limit.getName(), limit.getValue());
+        return new LimitResponseDto(limit.getName(), limit.getLimitValue());
     }
 }

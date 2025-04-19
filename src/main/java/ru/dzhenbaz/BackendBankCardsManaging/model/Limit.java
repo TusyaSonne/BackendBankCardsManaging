@@ -12,15 +12,20 @@ public class Limit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private BigDecimal value;
+    private BigDecimal limitValue;
 
     public Limit() {
     }
 
-    public Limit(Integer id, String name, BigDecimal value) {
+    public Limit(Integer id, String name, BigDecimal limitValue) {
         this.id = id;
         this.name = name;
-        this.value = value;
+        this.limitValue = limitValue;
+    }
+
+    public Limit(String name, BigDecimal limitValue) {
+        this.name = name;
+        this.limitValue = limitValue;
     }
 
     public Integer getId() {
@@ -39,11 +44,11 @@ public class Limit {
         this.name = name;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getLimitValue() {
+        return limitValue;
     }
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setLimitValue(BigDecimal limitValue) {
+        this.limitValue = limitValue;
     }
 }

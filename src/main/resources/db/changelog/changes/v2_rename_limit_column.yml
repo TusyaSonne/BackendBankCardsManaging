@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-limit-value-column
+      author: dzhenbaz
+      changes:
+        - renameColumn:
+            tableName: limits
+            oldColumnName: value
+            newColumnName: limit_value
+            columnDataType: NUMERIC(19,2)

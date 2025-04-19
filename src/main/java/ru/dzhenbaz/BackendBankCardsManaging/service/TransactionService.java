@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.TransactionResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.TransferResponseDto;
-import ru.dzhenbaz.BackendBankCardsManaging.dto.WithdrawRequestDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.WithdrawResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.model.Card;
 import ru.dzhenbaz.BackendBankCardsManaging.model.Limit;
@@ -47,36 +45,6 @@ public class TransactionService {
         this.limitRepository = limitRepository;
         this.modelMapper = modelMapper;
     }
-
-
-
-    public List<TransactionResponseDto> getAllTransactions(User currentUser) {
-        List<Transaction> transactions;
-
-        if (currentUser.getRole() == Role.ROLE_ADMIN) {
-            transactions = transactionRepository.findAll();
-        } else {
-            transactions = transactionRepository.findAllByCard_Owner(currentUser);
-        }
-
-        return transactions.stream().map(this::mapToDto).toList();
-    }
-
-
-    public List<TransactionResponseDto> getByCardId(Long cardId) {
-        User user = authService.getCurrentUser();
-        Card card = cardRepository.findById(cardId)
-                .orElseThrow(() -> new IllegalArgumentException("Card not found"));
-
-        if (!card.getOwner().getId().equals(user.getId()) && user.getRole() != Role.ROLE_ADMIN) {
-            throw new AccessDeniedException("Access denied");
-        }
-
-        List<Transaction> transactions = transactionRepository.findAllByCard(card);
-
-        return transactions.stream().map(this::mapToDto).toList();
-    }
-
 
     public Page<TransactionResponseDto> getByCardId(Long cardId, TransactionType type, Pageable pageable) {
         User currentUser = authService.getCurrentUser();
@@ -210,11 +178,11 @@ public class TransactionService {
         if (limit == null) {
             limit = new Limit();
             limit.setName("daily_limit");
-            limit.setValue(BigDecimal.valueOf(1000000.00));
+            limit.setLimitValue(BigDecimal.valueOf(1000000.00));
             limit = limitRepository.save(limit);
         }
 
-        BigDecimal dailyLimit = limit.getValue();
+        BigDecimal dailyLimit = limit.getLimitValue();
         // Сумма всех операций WITHDRAW по этой карте за сегодняшний день
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59);

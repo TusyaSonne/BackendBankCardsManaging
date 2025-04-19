@@ -1,6 +1,7 @@
 package ru.dzhenbaz.BackendBankCardsManaging.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -48,9 +49,10 @@ public class AuthService {
     }
 
     public AuthResponseDto login(LoginRequestDto request) {
-        User user = repository.findUserByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException(("User with this email not found")));
+        User user = repository.findUserByEmail(request.getEmail()).orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
+
         if (!encoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid Credentials");
+            throw new BadCredentialsException("Invalid credentials");
         }
 
         return new AuthResponseDto((jwtUtil.generateToken(user.getEmail())));
