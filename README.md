@@ -4,15 +4,20 @@
 
 ---
 ## Установка и запуск
-1. Клонируйте репозиторий:
+
+### Требования:
+- **Docker Desktop** (либо Docker и Docker Compose)
+
+### Шаги:
+1. **Клонируйте репозиторий:**
    ```bash
    git clone https://github.com/TusyaSonne/BackendBankCardsManaging.git
    ```
-2. Перейдите в папку с репозиторием:
+2. **Перейдите в директорию проекта:**
    ```bash
    cd BackendBankCardsManaging
    ```
-3. Запустите приложение:
+3. **Запустите приложение:**
    ```bash
    docker-compose up --build
    ```
