@@ -3,6 +3,21 @@ databaseChangeLog:
       id: 1
       author: dzhenbaz
 
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              tableName: users
+        - not:
+            tableExists:
+              tableName: cards
+        - not:
+            tableExists:
+              tableName: transactions
+        - not:
+            tableExists:
+              tableName: limits
+
       changes:
         - createTable:
             tableName: users
