@@ -8,12 +8,12 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.Card;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.CardStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface CardRepository extends JpaRepository<Card, Long>{
+public interface CardRepository extends JpaRepository<Card, Long> {
 
     boolean existsByCardNumber(String cardNumber);
+
     List<Card> findAllByOwnerId(Long ownerId);
 
     Page<Card> findAllByStatus(CardStatus status, Pageable pageable);

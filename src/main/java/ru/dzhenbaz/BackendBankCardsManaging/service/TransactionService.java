@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.TransactionResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.TransferResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.WithdrawResponseDto;
@@ -23,7 +24,6 @@ import ru.dzhenbaz.BackendBankCardsManaging.repository.TransactionRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class TransactionService {
@@ -35,8 +35,6 @@ public class TransactionService {
     private final ModelMapper modelMapper;
 
 
-
-
     @Autowired
     public TransactionService(TransactionRepository transactionRepository, CardRepository cardRepository, AuthService authService, LimitRepository limitRepository, ModelMapper modelMapper) {
         this.transactionRepository = transactionRepository;
@@ -46,11 +44,12 @@ public class TransactionService {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional(readOnly = true)
     public Page<TransactionResponseDto> getByCardId(Long cardId, TransactionType type, Pageable pageable) {
         User currentUser = authService.getCurrentUser();
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new IllegalArgumentException("Card not found"));
-        
+
         if (!card.getOwner().getId().equals(currentUser.getId()) && currentUser.getRole() != Role.ROLE_ADMIN) {
             throw new AccessDeniedException("Access denied");
         }
@@ -62,7 +61,7 @@ public class TransactionService {
         return txPage.map(this::mapToDto);
     }
 
-
+    @Transactional(readOnly = true)
     public Page<TransactionResponseDto> getAllTransactions(User currentUser, TransactionType type, Pageable pageable) {
         Page<Transaction> txPage;
 
@@ -82,8 +81,7 @@ public class TransactionService {
         return txPage.map(this::mapToDto);
     }
 
-
-
+    @Transactional
     public WithdrawResponseDto withdraw(Long cardId, BigDecimal amount, String description) {
         User user = authService.getCurrentUser();
         Card card = getCardForCurrentUser(cardId, user);
@@ -112,6 +110,7 @@ public class TransactionService {
         return dto;
     }
 
+    @Transactional
     public TransferResponseDto transfer(Long fromCardId, Long toCardId, BigDecimal amount, String description) {
         User user = authService.getCurrentUser();
 

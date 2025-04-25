@@ -27,7 +27,8 @@ public class RegisterRequestDto {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public RegisterRequestDto() {}
+    public RegisterRequestDto() {
+    }
 
     public RegisterRequestDto(String email, String password, Role role) {
         this.email = email;

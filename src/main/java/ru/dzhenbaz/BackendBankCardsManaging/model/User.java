@@ -1,8 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lombok.Data;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 
 import java.util.List;
@@ -27,7 +25,8 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Card> cards;
 
-    public User() {}
+    public User() {
+    }
 
     public Long getId() {
         return id;

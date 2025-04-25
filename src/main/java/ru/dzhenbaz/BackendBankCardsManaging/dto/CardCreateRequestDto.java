@@ -18,7 +18,8 @@ public class CardCreateRequestDto {
     @DecimalMin(value = "0.00", message = "Balance must be zero or greater")
     private BigDecimal balance;
 
-    public CardCreateRequestDto() {}
+    public CardCreateRequestDto() {
+    }
 
     public CardCreateRequestDto(Long userId, BigDecimal balance) {
         this.userId = userId;

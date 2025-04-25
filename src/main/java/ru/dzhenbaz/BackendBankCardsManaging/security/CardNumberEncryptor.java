@@ -2,7 +2,6 @@ package ru.dzhenbaz.BackendBankCardsManaging.security;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,6 @@ public class CardNumberEncryptor implements AttributeConverter<String, String> {
 
     @Value("${security.encryption-key}")
     private String secretKey;
-
 
 
     private Cipher getEncryptCipher() throws Exception {

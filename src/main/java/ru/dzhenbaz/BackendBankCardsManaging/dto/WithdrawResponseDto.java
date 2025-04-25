@@ -1,7 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 
 import java.math.BigDecimal;

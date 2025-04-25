@@ -1,7 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.CardStatus;
 import ru.dzhenbaz.BackendBankCardsManaging.security.CardNumberEncryptor;
 
@@ -38,7 +37,8 @@ public class Card {
     @OneToMany(mappedBy = "card", fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
-    public Card() {}
+    public Card() {
+    }
 
     public Long getId() {
         return id;

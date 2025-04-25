@@ -1,8 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.LimitResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.LimitUpdateRequestDto;
-import ru.dzhenbaz.BackendBankCardsManaging.model.Limit;
 import ru.dzhenbaz.BackendBankCardsManaging.service.LimitService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/limits")

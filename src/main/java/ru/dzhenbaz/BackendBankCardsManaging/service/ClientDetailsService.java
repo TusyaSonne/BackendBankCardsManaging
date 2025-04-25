@@ -1,11 +1,11 @@
 package ru.dzhenbaz.BackendBankCardsManaging.service;
 
 
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dzhenbaz.BackendBankCardsManaging.model.User;
 import ru.dzhenbaz.BackendBankCardsManaging.repository.UserRepository;
 import ru.dzhenbaz.BackendBankCardsManaging.security.ClientDetails;
@@ -13,6 +13,7 @@ import ru.dzhenbaz.BackendBankCardsManaging.security.ClientDetails;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class ClientDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;

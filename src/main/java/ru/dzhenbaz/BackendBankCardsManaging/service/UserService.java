@@ -3,6 +3,7 @@ package ru.dzhenbaz.BackendBankCardsManaging.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dzhenbaz.BackendBankCardsManaging.model.User;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 import ru.dzhenbaz.BackendBankCardsManaging.repository.UserRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
@@ -30,6 +32,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public void changeUserRole(Long userId, Role newRole, User currentUser) {
         User targetUser = userRepository.findById(userId)

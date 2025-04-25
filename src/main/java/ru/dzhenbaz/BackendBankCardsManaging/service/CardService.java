@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.CardResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.model.Card;
 import ru.dzhenbaz.BackendBankCardsManaging.model.User;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class CardService {
 
     private final CardRepository cardRepository;
@@ -35,6 +37,7 @@ public class CardService {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public CardResponseDto createCard(Long id, BigDecimal balance) {
         User user = userService.getById(id)
@@ -67,18 +70,6 @@ public class CardService {
         return Optional.of(mapToCardDto(card));
     }
 
-    public List<CardResponseDto> getAllCards(User currentUser) {
-        List<Card> cards;
-
-        if (currentUser.getRole() == Role.ROLE_ADMIN) {
-            cards = cardRepository.findAll();
-        } else {
-            cards = cardRepository.findAllByOwnerId(currentUser.getId());
-        }
-
-        return cards.stream().map(this::mapToCardDto).toList();
-    }
-
     public Page<CardResponseDto> getAllCards(User currentUser, CardStatus status, Pageable pageable) {
         Page<Card> cards;
 
@@ -95,13 +86,14 @@ public class CardService {
         return cards.map(this::mapToCardDto);
     }
 
-
+    @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteCard(Long id) {
 
         cardRepository.deleteById(id);
     }
 
+    @Transactional
     public Optional<CardResponseDto> changeCardStatus(Long id, CardStatus newStatus, User currentUser) {
         Optional<Card> cardOpt = cardRepository.findById(id);
         if (cardOpt.isEmpty()) {

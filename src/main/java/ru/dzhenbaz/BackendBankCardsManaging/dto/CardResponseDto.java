@@ -1,7 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +26,8 @@ public class CardResponseDto {
     @Schema(description = "ID владельца карты", example = "2")
     private Long ownerId;
 
-    public CardResponseDto() {}
+    public CardResponseDto() {
+    }
 
     public CardResponseDto(Long id, String maskedCardNumber,
                            LocalDate expirationDate, String status,

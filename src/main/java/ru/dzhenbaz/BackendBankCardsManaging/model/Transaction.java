@@ -1,7 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 
 import java.math.BigDecimal;
@@ -29,7 +28,8 @@ public class Transaction {
 
     private String description;
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
     public Long getId() {
         return id;

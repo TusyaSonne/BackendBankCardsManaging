@@ -30,13 +30,13 @@ public class JwtUtil {
                 .sign(Algorithm.HMAC256(secret));
     }
 
-    public String validateTokenAndRetrieveClaim(String token)  throws JWTVerificationException {
+    public String validateTokenAndRetrieveClaim(String token) throws JWTVerificationException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
                 .withSubject("User details")
                 .withIssuer("Dzhenbaz")
                 .build();
 
-        DecodedJWT jwt =  verifier.verify(token);
-        return  jwt.getClaim("email").asString();
+        DecodedJWT jwt = verifier.verify(token);
+        return jwt.getClaim("email").asString();
     }
 }

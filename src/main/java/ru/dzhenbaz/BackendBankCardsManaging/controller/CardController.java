@@ -22,7 +22,6 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.CardStatus;
 import ru.dzhenbaz.BackendBankCardsManaging.service.AuthService;
 import ru.dzhenbaz.BackendBankCardsManaging.service.CardService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/cards")

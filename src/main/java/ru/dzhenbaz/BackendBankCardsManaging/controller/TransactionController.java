@@ -1,8 +1,6 @@
 package ru.dzhenbaz.BackendBankCardsManaging.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.*;
-import ru.dzhenbaz.BackendBankCardsManaging.model.Transaction;
 import ru.dzhenbaz.BackendBankCardsManaging.model.User;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 import ru.dzhenbaz.BackendBankCardsManaging.service.AuthService;
 import ru.dzhenbaz.BackendBankCardsManaging.service.TransactionService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")

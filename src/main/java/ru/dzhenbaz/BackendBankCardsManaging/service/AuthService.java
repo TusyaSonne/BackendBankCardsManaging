@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.AuthResponseDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.LoginRequestDto;
 import ru.dzhenbaz.BackendBankCardsManaging.dto.RegisterRequestDto;
@@ -16,6 +17,7 @@ import ru.dzhenbaz.BackendBankCardsManaging.security.ClientDetails;
 import ru.dzhenbaz.BackendBankCardsManaging.security.JwtUtil;
 
 @Service
+@Transactional(readOnly = true)
 public class AuthService {
 
     private final UserRepository repository;
@@ -29,11 +31,11 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
+    @Transactional
     public AuthResponseDto register(RegisterRequestDto request) {
 
         if (repository.findUserByEmail(request.getEmail()).isPresent()) {
             throw new IllegalArgumentException("User with email " + request.getEmail() + " already exists");
-            // Возможно потом заменить на валидатор
         }
 
         User user = new User();
