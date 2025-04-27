@@ -16,6 +16,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.repository.UserRepository;
 import ru.dzhenbaz.BackendBankCardsManaging.security.ClientDetails;
 import ru.dzhenbaz.BackendBankCardsManaging.security.JwtUtil;
 
+/**
+ * Сервис для аутентификации и регистрации пользователей.
+ * Отвечает за регистрацию новых пользователей, выдачу JWT токенов при входе и получение текущего пользователя.
+ */
 @Service
 @Transactional(readOnly = true)
 public class AuthService {
@@ -24,6 +28,13 @@ public class AuthService {
     private final PasswordEncoder encoder;
     private final JwtUtil jwtUtil;
 
+    /**
+     * Конструктор для внедрения зависимостей.
+     *
+     * @param repository репозиторий пользователей
+     * @param encoder    шифратор паролей
+     * @param jwtUtil    утилита для генерации JWT токенов
+     */
     @Autowired
     public AuthService(UserRepository repository, PasswordEncoder encoder, JwtUtil jwtUtil) {
         this.repository = repository;
@@ -31,6 +42,13 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
+    /**
+     * Регистрирует нового пользователя в системе.
+     *
+     * @param request данные для регистрации
+     * @return токен авторизации
+     * @throws IllegalArgumentException если пользователь с таким email уже существует
+     */
     @Transactional
     public AuthResponseDto register(RegisterRequestDto request) {
 
@@ -50,8 +68,16 @@ public class AuthService {
         return new AuthResponseDto(jwtUtil.generateToken(savedUser.getEmail()));
     }
 
+    /**
+     * Аутентифицирует пользователя по email и паролю.
+     *
+     * @param request данные для входа
+     * @return токен авторизации
+     * @throws BadCredentialsException если данные неверные
+     */
     public AuthResponseDto login(LoginRequestDto request) {
-        User user = repository.findUserByEmail(request.getEmail()).orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
+        User user = repository.findUserByEmail(request.getEmail())
+                .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
 
         if (!encoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Invalid credentials");
@@ -60,6 +86,11 @@ public class AuthService {
         return new AuthResponseDto((jwtUtil.generateToken(user.getEmail())));
     }
 
+    /**
+     * Возвращает текущего аутентифицированного пользователя.
+     *
+     * @return текущий пользователь
+     */
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ClientDetails clientDetails = (ClientDetails) authentication.getPrincipal();

@@ -13,6 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Конфигурация безопасности Spring Security для приложения.
+ * Настраивает правила доступа, фильтрацию JWT токенов и шифрование паролей.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -25,6 +29,14 @@ public class SecurityConfig {
         this.jwtFilter = jwtFilter;
     }
 
+    /**
+     * Конфигурация цепочки фильтров безопасности.
+     * Отключает CSRF, настраивает доступ к публичным эндпоинтам и применяет JWT фильтр.
+     *
+     * @param http объект конфигурации {@link HttpSecurity}
+     * @return сконфигурированная {@link SecurityFilterChain}
+     * @throws Exception в случае ошибок конфигурации
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -42,6 +54,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Бин для шифрования паролей с использованием алгоритма BCrypt.
+     *
+     * @return экземпляр {@link PasswordEncoder}
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();

@@ -15,7 +15,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 import ru.dzhenbaz.BackendBankCardsManaging.service.AuthService;
 import ru.dzhenbaz.BackendBankCardsManaging.service.TransactionService;
 
-
+/**
+ * Контроллер для управления транзакциями по картам.
+ * Позволяет получать историю транзакций, снимать средства и переводить деньги между своими картами.
+ */
 @RestController
 @RequestMapping("/transactions")
 @Tag(name = "4. Транзакции", description = "Просмотр и выполнение транзакций по картам")
@@ -30,6 +33,14 @@ public class TransactionController {
         this.authService = authService;
     }
 
+    /**
+     * Получает список всех транзакций текущего пользователя или всех транзакций (если администратор).
+     *
+     * @param type фильтрация по типу транзакции (опционально)
+     * @param page номер страницы
+     * @param size размер страницы
+     * @return страница транзакций
+     */
     @Operation(summary = "Получить список всех транзакций (пользователь — только свои)")
     @GetMapping
     public ResponseEntity<Page<TransactionResponseDto>> getAll(
@@ -42,6 +53,15 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.getAllTransactions(user, type, pageable));
     }
 
+    /**
+     * Получает транзакции, относящиеся к конкретной карте.
+     *
+     * @param cardId идентификатор карты
+     * @param type   фильтрация по типу транзакции (опционально)
+     * @param page   номер страницы
+     * @param size   размер страницы
+     * @return страница транзакций по карте
+     */
     @Operation(summary = "Получить транзакции по конкретной карте (пользователь - только по своей)")
     @GetMapping("/cards/{cardId}")
     public ResponseEntity<Page<TransactionResponseDto>> getByCard(
@@ -54,6 +74,12 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.getByCardId(cardId, type, pageable));
     }
 
+    /**
+     * Выполняет снятие средств с указанной карты.
+     *
+     * @param request данные о снятии
+     * @return информация о выполненной транзакции
+     */
     @Operation(summary = "Снять средства со своей карты")
     @PostMapping("/withdraw")
     public ResponseEntity<WithdrawResponseDto> withdraw(@RequestBody @Valid WithdrawRequestDto request) {
@@ -65,6 +91,12 @@ public class TransactionController {
         return ResponseEntity.ok(transaction);
     }
 
+    /**
+     * Выполняет перевод средств между двумя своими картами.
+     *
+     * @param request данные о переводе
+     * @return информация о выполненном переводе
+     */
     @Operation(summary = "Перевод средств между своими картами")
     @PostMapping("/transfer")
     public ResponseEntity<TransferResponseDto> transfer(@RequestBody @Valid TransferRequestDto request) {

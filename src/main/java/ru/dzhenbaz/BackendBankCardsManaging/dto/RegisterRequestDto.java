@@ -9,6 +9,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 
+/**
+ * DTO для запроса на регистрацию нового пользователя.
+ * Содержит email, пароль и роль.
+ */
 @Schema(description = "Запрос для регистрации пользователя")
 public class RegisterRequestDto {
 

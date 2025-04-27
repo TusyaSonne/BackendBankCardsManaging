@@ -8,7 +8,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-
+/**
+ * Entity-класс, представляющий банковскую карту пользователя.
+ * Содержит номер карты (шифруется), владельца, срок действия, баланс, статус и связанные транзакции.
+ */
 @Entity
 @Table(name = "cards")
 public class Card {

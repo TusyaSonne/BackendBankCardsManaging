@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * DTO для запроса на аутентификацию пользователя.
+ * Содержит email и пароль.
+ */
 @Schema(description = "Запрос для входа пользователя")
 public class LoginRequestDto {
 
@@ -16,7 +20,8 @@ public class LoginRequestDto {
     @NotBlank(message = "Password must not be blank")
     private String password;
 
-    public LoginRequestDto() {}
+    public LoginRequestDto() {
+    }
 
     public String getEmail() {
         return email;

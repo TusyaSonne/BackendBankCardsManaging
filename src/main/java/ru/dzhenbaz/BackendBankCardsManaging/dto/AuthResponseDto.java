@@ -2,6 +2,10 @@ package ru.dzhenbaz.BackendBankCardsManaging.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * DTO-объект ответа при успешной аутентификации.
+ * Содержит JWT-токен для доступа к защищённым ресурсам.
+ */
 @Schema(description = "Ответ при успешной аутентификации (JWT токен)")
 public class AuthResponseDto {
 

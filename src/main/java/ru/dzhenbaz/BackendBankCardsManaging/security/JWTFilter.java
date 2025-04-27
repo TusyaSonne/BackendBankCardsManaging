@@ -16,6 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import java.io.IOException;
 
+/**
+ * Фильтр для проверки JWT токенов в запросах.
+ * Отвечает за аутентификацию пользователей на основе переданных токенов.
+ */
 @Component
 public class JWTFilter extends OncePerRequestFilter {
 
@@ -28,9 +32,20 @@ public class JWTFilter extends OncePerRequestFilter {
         this.clientDetailsService = clientDetailsService;
     }
 
+    /**
+     * Проверяет наличие и валидность JWT токена в каждом HTTP-запросе.
+     * Если токен валидный, устанавливает аутентификацию в {@link SecurityContextHolder}.
+     *
+     * @param request     входящий HTTP-запрос
+     * @param response    исходящий HTTP-ответ
+     * @param filterChain цепочка фильтров
+     * @throws ServletException в случае ошибки обработки запроса
+     * @throws IOException      в случае ошибки ввода-вывода
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        // В случае, если аутентификация еще не прошла - не проверяем токен
         String path = request.getServletPath();
         if (path.startsWith("/auth")) {
             filterChain.doFilter(request, response);

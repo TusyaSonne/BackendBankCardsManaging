@@ -18,9 +18,12 @@ import ru.dzhenbaz.BackendBankCardsManaging.repository.CardRepository;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * Сервис для управления банковскими картами.
+ * Реализует бизнес-логику создания, удаления, изменения статуса и получения карт.
+ */
 @Service
 @Transactional(readOnly = true)
 public class CardService {
@@ -37,6 +40,14 @@ public class CardService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Создает новую карту для пользователя с указанным балансом.
+     * Доступно только администраторам.
+     *
+     * @param id      идентификатор пользователя
+     * @param balance начальный баланс карты
+     * @return созданная карта в виде DTO
+     */
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public CardResponseDto createCard(Long id, BigDecimal balance) {
@@ -54,6 +65,13 @@ public class CardService {
         return mapToCardDto(saveCard);
     }
 
+    /**
+     * Получает карту по ID, проверяя права доступа текущего пользователя.
+     *
+     * @param id          идентификатор карты
+     * @param currentUser текущий пользователь
+     * @return найденная карта в виде DTO, либо пустой Optional
+     */
     public Optional<CardResponseDto> getById(Long id, User currentUser) {
         Optional<Card> cardOpt = cardRepository.findById(id);
 
@@ -70,6 +88,15 @@ public class CardService {
         return Optional.of(mapToCardDto(card));
     }
 
+    /**
+     * Получает список карт с фильтрацией по статусу и пагинацией.
+     * Доступные карты зависят от роли пользователя.
+     *
+     * @param currentUser текущий пользователь
+     * @param status      статус карты (опционально)
+     * @param pageable    параметры пагинации
+     * @return страница карт
+     */
     public Page<CardResponseDto> getAllCards(User currentUser, CardStatus status, Pageable pageable) {
         Page<Card> cards;
 
@@ -86,6 +113,12 @@ public class CardService {
         return cards.map(this::mapToCardDto);
     }
 
+    /**
+     * Удаляет карту по её идентификатору.
+     * Доступно только администраторам.
+     *
+     * @param id идентификатор карты
+     */
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteCard(Long id) {
@@ -93,6 +126,15 @@ public class CardService {
         cardRepository.deleteById(id);
     }
 
+    /**
+     * Изменяет статус карты.
+     * Проверяет права пользователя.
+     *
+     * @param id          идентификатор карты
+     * @param newStatus   новый статус карты
+     * @param currentUser текущий пользователь
+     * @return обновленная карта в виде DTO, либо пустой Optional
+     */
     @Transactional
     public Optional<CardResponseDto> changeCardStatus(Long id, CardStatus newStatus, User currentUser) {
         Optional<Card> cardOpt = cardRepository.findById(id);
@@ -122,6 +164,11 @@ public class CardService {
         return Optional.of(mapToCardDto(card));
     }
 
+    /**
+     * Генерирует уникальный номер карты из 16 цифр.
+     *
+     * @return уникальный номер карты
+     */
     private String generateCardNumber() {
         SecureRandom random = new SecureRandom();
         String cardNumber;
@@ -137,6 +184,12 @@ public class CardService {
         return cardNumber;
     }
 
+    /**
+     * Преобразует сущность карты в DTO.
+     *
+     * @param card сущность карты
+     * @return DTO карты
+     */
     public CardResponseDto mapToCardDto(Card card) {
         CardResponseDto dto = modelMapper.map(card, CardResponseDto.class);
         dto.setMaskedCardNumber(maskCardNumber(card.getCardNumber()));
@@ -144,6 +197,12 @@ public class CardService {
         return dto;
     }
 
+    /**
+     * Маскирует номер карты, скрывая все цифры кроме последних четырех.
+     *
+     * @param number полный номер карты
+     * @return маскированный номер карты
+     */
     private String maskCardNumber(String number) {
         return "**** **** **** " + number.substring(number.length() - 4);
     }

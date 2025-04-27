@@ -10,6 +10,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.repository.LimitRepository;
 
 import java.math.BigDecimal;
 
+/**
+ * Сервис для управления лимитами операций.
+ * Отвечает за получение и обновление дневного лимита.
+ */
 @Service
 @Transactional(readOnly = true)
 public class LimitService {
@@ -21,6 +25,12 @@ public class LimitService {
         this.limitRepository = limitRepository;
     }
 
+    /**
+     * Получает текущий дневной лимит.
+     * Если лимит отсутствует, создаёт его с дефолтным значением.
+     *
+     * @return DTO с информацией о лимите
+     */
     @Transactional
     public LimitResponseDto getDailyLimit() {
         Limit limit = limitRepository.findByName("daily_limit");
@@ -34,6 +44,13 @@ public class LimitService {
         return new LimitResponseDto(limit.getName(), limit.getLimitValue());
     }
 
+    /**
+     * Обновляет значение дневного лимита.
+     * Доступно только администраторам.
+     *
+     * @param newValue новое значение лимита
+     * @return обновленный лимит в виде DTO
+     */
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public LimitResponseDto updateDailyLimit(BigDecimal newValue) {

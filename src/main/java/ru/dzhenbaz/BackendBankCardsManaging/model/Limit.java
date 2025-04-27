@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+/**
+ * Entity-класс, представляющий лимит на операции.
+ * Содержит название лимита и его максимальное значение.
+ */
 @Entity
 @Table(name = "limits")
 public class Limit {

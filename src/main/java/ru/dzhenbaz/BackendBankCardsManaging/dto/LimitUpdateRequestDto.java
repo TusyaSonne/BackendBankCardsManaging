@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для запроса на обновление значения лимита.
+ * Содержит новое значение лимита в рублях.
+ */
 @Schema(description = "Запрос на обновление лимита")
 public class LimitUpdateRequestDto {
 

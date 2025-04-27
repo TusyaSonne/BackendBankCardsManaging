@@ -5,6 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * DTO-объект для ответа с информацией о банковской карте.
+ * Содержит маскированный номер карты, срок действия, статус, баланс и владельца.
+ */
 @Schema(description = "Ответ с информацией о банковской карте")
 public class CardResponseDto {
 

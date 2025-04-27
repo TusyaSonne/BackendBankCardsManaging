@@ -5,7 +5,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 
 import java.util.List;
 
-
+/**
+ * Entity-класс, представляющий пользователя системы.
+ * Содержит email, пароль (шифруется), роль пользователя и связанные банковские карты.
+ */
 @Entity
 @Table(name = "users")
 public class User {

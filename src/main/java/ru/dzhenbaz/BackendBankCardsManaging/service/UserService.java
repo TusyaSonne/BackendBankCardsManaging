@@ -11,6 +11,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Сервис для управления пользователями.
+ * Предоставляет методы получения пользователей и изменения их ролей.
+ */
 @Service
 @Transactional(readOnly = true)
 public class UserService {
@@ -22,16 +26,38 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Получает пользователя по идентификатору.
+     * Доступно только администраторам.
+     *
+     * @param id идентификатор пользователя
+     * @return пользователь, если найден
+     */
     @PreAuthorize("hasRole('ADMIN')")
     public Optional<User> getById(Long id) {
         return userRepository.findById(id);
     }
 
+    /**
+     * Получает список всех пользователей системы.
+     * Доступно только администраторам.
+     *
+     * @return список пользователей
+     */
     @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    /**
+     * Изменяет роль пользователя.
+     * Проверяет, чтобы администратор не мог изменить свою собственную роль на не-администратора.
+     * Доступно только администраторам.
+     *
+     * @param userId      идентификатор пользователя
+     * @param newRole     новая роль пользователя
+     * @param currentUser текущий пользователь
+     */
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
     public void changeUserRole(Long userId, Role newRole, User currentUser) {

@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для запроса на создание новой банковской карты.
+ * Содержит ID пользователя и начальный баланс карты.
+ */
 @Schema(description = "Запрос на создание карты")
 public class CardCreateRequestDto {
 

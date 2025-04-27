@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для запроса на перевод средств между картами одного пользователя.
+ * Содержит информацию о карте-отправителе, карте-получателе, сумме и описании перевода.
+ */
 @Schema(description = "Запрос на перевод средств между картами пользователя")
 public class TransferRequestDto {
 

@@ -12,13 +12,22 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * Репозиторий для работы с сущностями {@link Transaction}.
+ * Предоставляет методы для поиска и агрегации транзакций по картам, пользователям и типам операций.
+ */
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findAllByCard(Card card);
-
+    /**
+     * Считает сумму всех снятий средств по карте за указанный период времени.
+     *
+     * @param card  карта
+     * @param start начало периода
+     * @param end   конец периода
+     * @return сумма снятий
+     */
     @Query("SELECT SUM(t.amount) FROM Transaction t " +
             "WHERE t.card = :card AND t.type = 'WITHDRAW' " +
             "AND t.timestamp BETWEEN :start AND :end")
@@ -26,8 +35,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             @Param("card") Card card,
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end);
-
-    List<Transaction> findAllByCard_Owner(User owner);
 
     Page<Transaction> findAllByCard(Card card, Pageable pageable);
 

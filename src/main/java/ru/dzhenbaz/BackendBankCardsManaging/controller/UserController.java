@@ -15,6 +15,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.service.UserService;
 
 import java.util.List;
 
+/**
+ * Контроллер для управления пользователями.
+ * Доступен только администраторам.
+ */
 @RestController
 @RequestMapping("/users")
 @Tag(name = "5. Пользователи", description = "Операции управления пользователями (только для Администратора)")
@@ -31,6 +35,11 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Получает список всех пользователей системы.
+     *
+     * @return список пользователей
+     */
     @Operation(summary = "Получить список всех пользователей")
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll() {
@@ -39,6 +48,12 @@ public class UserController {
                 .toList());
     }
 
+    /**
+     * Получает пользователя по идентификатору.
+     *
+     * @param id идентификатор пользователя
+     * @return данные пользователя или 404 Not Found
+     */
     @Operation(summary = "Получить пользователя по ID")
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
@@ -47,9 +62,17 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Изменяет роль указанного пользователя.
+     *
+     * @param id      идентификатор пользователя
+     * @param request данные с новой ролью
+     * @return сообщение об успешной операции или ошибка
+     */
     @Operation(summary = "Изменить роль пользователя")
     @PostMapping("/{id}/role")
-    public ResponseEntity<?> updateUserRole(@PathVariable Long id, @RequestBody @Valid ChangeRoleRequestDto request) {
+    public ResponseEntity<?> updateUserRole(@PathVariable Long id,
+                                            @RequestBody @Valid ChangeRoleRequestDto request) {
 
         User currentUser = authService.getCurrentUser();
 

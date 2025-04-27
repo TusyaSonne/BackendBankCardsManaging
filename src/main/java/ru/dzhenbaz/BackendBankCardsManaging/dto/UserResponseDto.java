@@ -3,6 +3,10 @@ package ru.dzhenbaz.BackendBankCardsManaging.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 
+/**
+ * DTO для ответа с информацией о пользователе.
+ * Содержит идентификатор, email и роль пользователя.
+ */
 @Schema(description = "Информация о пользователе")
 public class UserResponseDto {
 

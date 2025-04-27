@@ -12,6 +12,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.security.ClientDetails;
 
 import java.util.Optional;
 
+/**
+ * Сервис загрузки данных пользователя для Spring Security.
+ * Используется для аутентификации пользователей по email.
+ */
 @Service
 @Transactional(readOnly = true)
 public class ClientDetailsService implements UserDetailsService {
@@ -22,6 +26,13 @@ public class ClientDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Загружает пользователя по его email.
+     *
+     * @param username email пользователя
+     * @return детали пользователя для Spring Security
+     * @throws UsernameNotFoundException если пользователь не найден
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

@@ -6,6 +6,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * DTO для ответа при успешном снятии средств с карты.
+ * Содержит информацию о транзакции: номер карты, тип операции, сумму, дату и описание.
+ */
 @Schema(description = "Ответ при успешном снятии средств")
 public class WithdrawResponseDto {
 

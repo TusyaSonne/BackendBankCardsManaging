@@ -9,6 +9,10 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
+/**
+ * Конвертер для шифрования и расшифровки номеров банковских карт при сохранении в базу данных.
+ * Использует алгоритм AES для обеспечения безопасности хранения данных.
+ */
 @Component
 @Converter
 public class CardNumberEncryptor implements AttributeConverter<String, String> {
@@ -18,7 +22,12 @@ public class CardNumberEncryptor implements AttributeConverter<String, String> {
     @Value("${security.encryption-key}")
     private String secretKey;
 
-
+    /**
+     * Создает Cipher для шифрования данных.
+     *
+     * @return объект {@link Cipher} в режиме шифрования
+     * @throws Exception если не удалось создать Cipher
+     */
     private Cipher getEncryptCipher() throws Exception {
         SecretKeySpec key = new SecretKeySpec(secretKey.getBytes(), ALGORITHM);
         Cipher c = Cipher.getInstance(ALGORITHM);
@@ -26,6 +35,12 @@ public class CardNumberEncryptor implements AttributeConverter<String, String> {
         return c;
     }
 
+    /**
+     * Создает Cipher для расшифровки данных.
+     *
+     * @return объект {@link Cipher} в режиме расшифровки
+     * @throws Exception если не удалось создать Cipher
+     */
     private Cipher getDecryptCipher() throws Exception {
         SecretKeySpec key = new SecretKeySpec(secretKey.getBytes(), ALGORITHM);
         Cipher c = Cipher.getInstance(ALGORITHM);
@@ -33,10 +48,18 @@ public class CardNumberEncryptor implements AttributeConverter<String, String> {
         return c;
     }
 
+    /**
+     * Шифрует номер карты перед сохранением в базу данных.
+     *
+     * @param cardNumber номер карты в открытом виде
+     * @return зашифрованная строка для хранения в базе данных
+     */
     @Override
     public String convertToDatabaseColumn(String cardNumber) {
         try {
-            if (cardNumber == null) return null;
+            if (cardNumber == null) {
+                return null;
+            }
             Cipher cipher = getEncryptCipher();
             byte[] encrypted = cipher.doFinal(cardNumber.getBytes());
             return Base64.getEncoder().encodeToString(encrypted);
@@ -45,6 +68,12 @@ public class CardNumberEncryptor implements AttributeConverter<String, String> {
         }
     }
 
+    /**
+     * Расшифровывает номер карты при чтении из базы данных.
+     *
+     * @param encrypted зашифрованная строка
+     * @return номер карты в открытом виде
+     */
     @Override
     public String convertToEntityAttribute(String encrypted) {
         try {

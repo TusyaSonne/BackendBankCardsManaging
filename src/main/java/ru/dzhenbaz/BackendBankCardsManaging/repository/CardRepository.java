@@ -9,6 +9,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.CardStatus;
 
 import java.util.List;
 
+/**
+ * Репозиторий для работы с сущностями {@link Card}.
+ * Предоставляет методы для поиска карт по владельцу и статусу.
+ */
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
 

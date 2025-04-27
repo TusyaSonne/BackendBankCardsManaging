@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для ответа с информацией о лимите.
+ * Содержит название лимита и его значение.
+ */
 @Schema(description = "Ответ с текущим лимитом")
 public class LimitResponseDto {
 

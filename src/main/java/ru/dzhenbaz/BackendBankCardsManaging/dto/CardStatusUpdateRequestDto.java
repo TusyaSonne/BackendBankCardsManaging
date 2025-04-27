@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.CardStatus;
 
+/**
+ * DTO для запроса на обновление статуса банковской карты.
+ * Содержит новый статус карты.
+ */
 @Schema(description = "Запрос на изменение статуса карты")
 public class CardStatusUpdateRequestDto {
 

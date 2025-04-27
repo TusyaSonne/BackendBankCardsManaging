@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для запроса на снятие средств с карты.
+ * Содержит идентификатор карты, сумму снятия и описание операции.
+ */
 @Schema(description = "Запрос на снятие средств с карты")
 public class WithdrawRequestDto {
 

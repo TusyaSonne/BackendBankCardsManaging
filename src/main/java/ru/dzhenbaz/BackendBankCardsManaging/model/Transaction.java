@@ -6,7 +6,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
+/**
+ * Entity-класс, представляющий транзакцию по банковской карте.
+ * Содержит информацию о типе операции, сумме, времени проведения и описании (опционально).
+ */
 @Entity
 @Table(name = "transactions")
 public class Transaction {

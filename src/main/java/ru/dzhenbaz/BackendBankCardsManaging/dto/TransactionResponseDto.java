@@ -6,6 +6,10 @@ import ru.dzhenbaz.BackendBankCardsManaging.model.enums.TransactionType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * DTO для ответа с информацией о транзакции.
+ * Содержит данные о карте, типе операции, сумме, времени и описании транзакции.
+ */
 @Schema(description = "Информация о транзакции")
 public class TransactionResponseDto {
 

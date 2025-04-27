@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import ru.dzhenbaz.BackendBankCardsManaging.model.enums.Role;
 
+/**
+ * DTO для запроса на изменение роли пользователя.
+ * Содержит новую роль.
+ */
 @Schema(description = "Запрос на изменение роли пользователя")
 public class ChangeRoleRequestDto {
 

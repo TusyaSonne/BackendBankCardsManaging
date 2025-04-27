@@ -11,12 +11,22 @@ import org.springframework.stereotype.Component;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+/**
+ * Утилитный класс для генерации и валидации JWT токенов.
+ * Использует алгоритм HMAC256 для подписи токенов.
+ */
 @Component
 public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String secret;
 
+    /**
+     * Генерирует JWT токен для указанного email.
+     *
+     * @param email email пользователя
+     * @return сгенерированный JWT токен
+     */
     public String generateToken(String email) {
 
         Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
@@ -30,6 +40,13 @@ public class JwtUtil {
                 .sign(Algorithm.HMAC256(secret));
     }
 
+    /**
+     * Валидирует JWT токен и извлекает из него email.
+     *
+     * @param token JWT токен
+     * @return email, содержащийся в токене
+     * @throws JWTVerificationException если токен недействителен или просрочен
+     */
     public String validateTokenAndRetrieveClaim(String token) throws JWTVerificationException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
                 .withSubject("User details")

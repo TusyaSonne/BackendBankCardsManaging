@@ -4,6 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для ответа при успешном переводе средств между картами.
+ * Содержит сообщение об успехе, номера карт и детали перевода.
+ */
 @Schema(description = "Ответ при успешном переводе между картами")
 public class TransferResponseDto {
 
